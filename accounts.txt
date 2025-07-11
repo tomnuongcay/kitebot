@@ -1,2 +1,2 @@
-your_evm(EOA)_address_1
-your_evm(EOA)_address_2
+pk1
+pk2
