@@ -943,7 +943,7 @@ class KiteAi:
                     f"{Fore.GREEN + Style.BRIGHT}Interactions{Style.RESET_ALL}"
                     f"{Fore.WHITE + Style.BRIGHT} {success_count+1} {Style.RESET_ALL}"
                     f"{Fore.MAGENTA + Style.BRIGHT}Of{Style.RESET_ALL}"
-                    f"{Fore.WHITE + Style.BRIGHT barev} 30 {Style.RESET_ALL}                           "
+                    f"{Fore.WHITE + Style.BRIGHT} 30 {Style.RESET_ALL}                           "
                 )
 
                 agent = random.choice(self.agent_lists)
