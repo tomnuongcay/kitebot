@@ -83,7 +83,6 @@ class KiteAi:
             with open(filename, 'r') as file:
                 data = json.load(file)
                 if isinstance(data, list):
-                    # Chỉ giữ lại Crypto Buddy và Professor
                     filtered_agents = [agent for agent in data if agent["agentName"] in ["Crypto Buddy", "Professor"]]
                     return filtered_agents
                 return []
@@ -996,16 +995,13 @@ class KiteAi:
             if captcha_key:
                 self.CAPTCHA_KEY = captcha_key
 
-            # Tải và lọc agents
             agents = self.load_ai_agents()
             if not agents:
                 self.log(f"{Fore.RED + Style.BRIGHT}No Agents Loaded.{Style.RESET_ALL}")
                 return
             
-            # Gán danh sách agent đã lọc
             self.agent_lists = agents
 
-            # Hiển thị danh sách agent đã tải
             self.log(f"{Fore.GREEN + Style.BRIGHT}Loaded agents: {', '.join([agent['agentName'] for agent in self.agent_lists])}{Style.RESET_ALL}")
 
             faucet, use_proxy_choice, rotate_proxy = self.print_question()
