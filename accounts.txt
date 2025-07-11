@@ -1,2 +1,3 @@
-pk1
-pk2
+address_wallet_1
+address_wallet_2
+...
