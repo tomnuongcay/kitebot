@@ -1,3 +1,5 @@
+NEW UPDATE: Turn off sherlock and changes questions
+
 # Kite AI Ozone BOT
 Kite AI Ozone BOT
 
