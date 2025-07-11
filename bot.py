@@ -69,7 +69,6 @@ class KiteAi:
         try:
             with open("2captcha_key.txt", 'r') as file:
                 captcha_key = file.read().strip()
-
             return captcha_key
         except Exception as e:
             return None
@@ -79,12 +78,14 @@ class KiteAi:
         try:
             if not os.path.exists(filename):
                 self.log(f"{Fore.RED}File {filename} Not Found.{Style.RESET_ALL}")
-                return
+                return []
 
             with open(filename, 'r') as file:
                 data = json.load(file)
                 if isinstance(data, list):
-                    return data
+                    # Chỉ giữ lại Crypto Buddy và Professor
+                    filtered_agents = [agent for agent in data if agent["agentName"] in ["Crypto Buddy", "Professor"]]
+                    return filtered_agents
                 return []
         except json.JSONDecodeError:
             return []
@@ -615,7 +616,7 @@ class KiteAi:
         headers = {
             **self.headers,
             "Authorization": f"Bearer {self.access_tokens[address]}",
-            "Content-Length": str(len(data)),
+            "CONTENT-Length": str(len(data)),
             "Content-Type": "application/json"
         }
         await asyncio.sleep(3)
@@ -942,7 +943,7 @@ class KiteAi:
                     f"{Fore.GREEN + Style.BRIGHT}Interactions{Style.RESET_ALL}"
                     f"{Fore.WHITE + Style.BRIGHT} {success_count+1} {Style.RESET_ALL}"
                     f"{Fore.MAGENTA + Style.BRIGHT}Of{Style.RESET_ALL}"
-                    f"{Fore.WHITE + Style.BRIGHT} 30 {Style.RESET_ALL}                           "
+                    f"{Fore.WHITE + Style.BRIGHT barev} 30 {Style.RESET_ALL}                           "
                 )
 
                 agent = random.choice(self.agent_lists)
@@ -995,13 +996,18 @@ class KiteAi:
             if captcha_key:
                 self.CAPTCHA_KEY = captcha_key
 
+            # Tải và lọc agents
             agents = self.load_ai_agents()
             if not agents:
                 self.log(f"{Fore.RED + Style.BRIGHT}No Agents Loaded.{Style.RESET_ALL}")
                 return
             
+            # Gán danh sách agent đã lọc
             self.agent_lists = agents
-            
+
+            # Hiển thị danh sách agent đã tải
+            self.log(f"{Fore.GREEN + Style.BRIGHT}Loaded agents: {', '.join([agent['agentName'] for agent in self.agent_lists])}{Style.RESET_ALL}")
+
             faucet, use_proxy_choice, rotate_proxy = self.print_question()
 
             while True:
